@@ -8,7 +8,8 @@ a {
 }
 
 .row {
-    float: left;
+  position: relative;
+    /*float: left;*/
 }
 
 .square {
@@ -17,6 +18,8 @@ a {
     width: 43px;
     height: 43px;
     margin: 3px;
-    float: left;
+    position: relative;
+    display: inline-block;
+    /*float: left;*/
     text-align: center;
 }

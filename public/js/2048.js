@@ -53,14 +53,14 @@
 
                 this.grid.eachRow(function (row) {
                     var stack = new that.Stack(row);
-                    success = success || stack.move(direction === 'w' ? -1 : 1);
+                    success = stack.move(direction === 'w' ? -1 : 1) || success;
                 });
 
             } else {
 
                 this.grid.eachColumn(function (column) {
                     var stack = new that.Stack(column);
-                    success = success || stack.move(direction === 'n' ? -1 : 1);
+                    success = stack.move(direction === 'n' ? -1 : 1) || success;
                 });
             }
 
