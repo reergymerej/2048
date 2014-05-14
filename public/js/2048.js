@@ -46,76 +46,22 @@
         * @return {Boolean} move completed
         */
         move: function (direction) {
-            var success;
+            var that = this,
+                success = false;
 
-            if (direction === 'w') {
+            if (direction === 'w' || direction === 'e') {
 
                 this.grid.eachRow(function (row) {
-                    var column = 0,
-                        square,
-                        squareValue,
-                        emptySquare,
-                        mergableSquare,
-                        movingSquare,
-                        i,
-                        targetSquareValue,
-                        afterEmptySquare,
-                        potentialMergable,
-                        lastMergeIndex,
-                        squareMoved;
-
-                    // Find the first square with a value.
-                    for (; column < row.length; column++) {
-                        square = row[column];
-                        squareValue = square.value();
-                        squareMoved = false;
-
-                        if (squareValue) {
-                            movingSquare = square;
-
-                            // Find the furthest empty square in the direction
-                            // of movement and the first potential mergable.
-                            i = column - 1;
-                            targetSquareValue = 0;
-                            potentialMergable = null;
-                            while (i >= 0) {
-                                targetSquareValue = row[i].value();
-                                if (!targetSquareValue) {
-                                    emptySquare = row[i];
-                                } else if (!potentialMergable) {
-                                    // TODO: If this guy just merged, we can't
-                                    // merge again.  We have to test this.
-                                    potentialMergable = row[i];
-                                }
-
-                                i--;
-                            }
-
-                            // Try to merge.
-                            if (potentialMergable) {
-
-                                // Make sure we didn't just merge this one.
-                                if (lastMergeIndex !== potentialMergable.column) {
-
-                                        if (potentialMergable.merge(square)) {
-                                            lastMergeIndex = potentialMergable.column;
-                                            squareMoved = true;
-                                            
-                                        }
-                                }
-                            }
-
-                            if (emptySquare && !squareMoved) {
-                                emptySquare.merge(square);
-                                squareMoved = true;
-                            }
-                        }
-                    }
+                    var stack = new that.Stack(row);
+                    success = success || stack.move(direction === 'w' ? -1 : 1);
                 });
 
-                success = true;
             } else {
-                success = true;
+
+                this.grid.eachColumn(function (column) {
+                    var stack = new that.Stack(column);
+                    success = success || stack.move(direction === 'n' ? -1 : 1);
+                });
             }
 
             return success;
@@ -124,7 +70,8 @@
         definePrototypes: function () {
 
             var Grid = this.Grid.prototype,
-                Square = this.Square.prototype;
+                Square = this.Square.prototype,
+                Stack = this.Stack.prototype;
 
             Grid.toString = function () {
                 var r, rows = [];
@@ -198,6 +145,13 @@
                 }
             };
 
+            Grid.eachColumn = function (fn) {
+                var i;
+                for (i = 0; i < this.columns; i++) {
+                    fn(this.column(i));
+                }
+            };
+
             Grid.display = function () {
                 console.log('-------------------');
                 console.log(this.toString());
@@ -261,6 +215,78 @@
 
                 return success;
             };
+
+            /**
+            * Moves/merges squares left/up or right/down.
+            * @param {Number} direction left/up when < 0
+            * right/down when > 0.
+            * @return {Boolean} success
+            */
+            Stack.move = function (direction) {
+                var success = false,
+                    stack = this.squares,
+                    square,
+                    squareValue,
+                    emptySquare,
+                    i,
+                    targetSquareValue,
+                    potentialMergable,
+                    lastMergeIndex,
+                    squareMoved,
+                    inc = direction < 0 ? -1 : 1,
+                    index = inc < 0 ? 0 : stack.length - 1;
+
+                // Move each square.
+                for (; index < stack.length && index >= 0; index -= inc) {
+                    square = stack[index];
+                    squareValue = square.value();
+                    squareMoved = false;
+
+                    if (squareValue) {
+
+                        // Find the furthest empty square in the direction
+                        // of movement and the first potential mergable.
+                        i = index + inc;
+                        targetSquareValue = 0;
+                        potentialMergable = null;
+                        while (i >= 0 && i < stack.length) {
+                            targetSquareValue = stack[i].value();
+                            if (!targetSquareValue) {
+                                emptySquare = stack[i];
+                            } else if (!potentialMergable) {
+                                potentialMergable = stack[i];
+                            }
+
+                            i += inc;
+                        }
+
+                        // Try to merge.
+                        if (potentialMergable) {
+
+                            // Make sure we didn't just merge this one.
+                            if (lastMergeIndex !== potentialMergable.column) {
+
+                                    if (potentialMergable.merge(square)) {
+                                        lastMergeIndex = potentialMergable.column;
+                                        squareMoved = true;
+                                        
+                                    }
+                            }
+                        }
+
+                        // Move to an empty space.
+                        if (emptySquare && !squareMoved) {
+                            emptySquare.merge(square);
+                            squareMoved = true;
+                        }
+                    }
+
+                    success = success || squareMoved;
+                }
+
+
+                return success;
+            };
         },
 
         Grid: function Grid (columns, rows, el) {
@@ -287,6 +313,11 @@
             this.column = column;
             this.row = row;
             this.val = 0;
+        },
+
+        // A column/row of squares.
+        Stack: function Stack (squares) {
+            this.squares = squares;
         },
 
         rand: function (min, max) {
