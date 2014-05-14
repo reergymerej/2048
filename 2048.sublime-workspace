@@ -4,6 +4,42 @@
 		"selected_items":
 		[
 			[
+				"val",
+				"value"
+			],
+			[
+				"S",
+				"Square"
+			],
+			[
+				"pro",
+				"prototype"
+			],
+			[
+				"ra",
+				"rand"
+			],
+			[
+				"colu",
+				"column"
+			],
+			[
+				"row",
+				"row"
+			],
+			[
+				"ro",
+				"row"
+			],
+			[
+				"co",
+				"column"
+			],
+			[
+				"col",
+				"column"
+			],
+			[
 				"try",
 				"try_it"
 			],
@@ -56,10 +92,6 @@
 				"categories"
 			],
 			[
-				"col",
-				"collection"
-			],
-			[
 				"brow",
 				"browserData"
 			],
@@ -74,10 +106,6 @@
 			[
 				"doingT",
 				"doingTask"
-			],
-			[
-				"pro",
-				"property"
 			],
 			[
 				"categor",
@@ -138,10 +166,6 @@
 			[
 				"inf",
 				"infoYouWant"
-			],
-			[
-				"row",
-				"rowsThatMatchCriteria"
 			],
 			[
 				"ma",
@@ -490,35 +514,27 @@
 			[
 				"fet",
 				"fetchTasks"
-			],
-			[
-				"mysql_re",
-				"mysql_real_escape_string"
-			],
-			[
-				"event",
-				"eventType"
-			],
-			[
-				"todoTa",
-				"todoTask"
-			],
-			[
-				"visib",
-				"visiblityClass"
-			],
-			[
-				"hide",
-				"hide-complete"
-			],
-			[
-				"sw",
-				"swapPositions"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "public/js/2048.js",
+			"settings":
+			{
+				"buffer_size": 7003,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/stylesheets/style.css",
+			"settings":
+			{
+				"buffer_size": 295,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "Packages/User/node.sublime-build",
 	"command_palette":
@@ -781,6 +797,13 @@
 	},
 	"file_history":
 	[
+		"/home/grizzle/code/2048/views/layout.jade",
+		"/home/grizzle/code/2048/views/index.jade",
+		"/home/grizzle/code/2048/public/stylesheets/style.css",
+		"/home/grizzle/code/2048/routes/index.js",
+		"/home/grizzle/code/2048/app.js",
+		"/home/grizzle/code/2048/README.md",
+		"/home/grizzle/code/2048/.gitignore",
 		"/home/grizzle/code/good-parts/bookclub/ch04/callbacks.js",
 		"/home/grizzle/.config/sublime-text-3/Packages/User/node.sublime-build",
 		"/home/grizzle/.config/sublime-text-3/Packages/User/node-debug.sublime-build",
@@ -901,18 +924,11 @@
 		"/home/grizzle/code/mean-tasks/.git/COMMIT_EDITMSG",
 		"/home/grizzle/code/mean-tasks/mean-tasks.sublime-project",
 		"/home/grizzle/code/mean-tasks/node_modules/forever/node_modules/pkginfo/examples/all-properties.js",
-		"/home/grizzle/code/mean-tasks/app/views/users/auth.html",
-		"/home/grizzle/code/mean-tasks/node_modules/swig/node_modules/uglify-js/node_modules/source-map/build/prefix-utils.jsm",
-		"/home/grizzle/code/mean-tasks/public/views/articles/create.html",
-		"/home/grizzle/code/mean-tasks/public/views/articles/edit.html",
-		"/home/grizzle/code/mean-tasks/app/routes/middlewares/authorization.js",
-		"/home/grizzle/code/mean-tasks/app/controllers/index.js",
-		"/home/grizzle/code/mean-tasks/app/routes/users.js",
-		"/home/grizzle/code/mean-tasks/app/routes/articles.js"
+		"/home/grizzle/code/mean-tasks/app/views/users/auth.html"
 	],
 	"find":
 	{
-		"height": 22.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -963,6 +979,25 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"hasMove",
+			"move",
+			".value = ",
+			"Square",
+			"row",
+			"display",
+			"case ",
+			" ",
+			"\"",
+			"getEmpty",
+			"empty",
+			"value",
+			"add",
+			"this.Grid.prototype",
+			"random",
+			"result",
+			"this.Grid",
+			"rows",
+			"column",
 			"document =",
 			"prepare_the_request",
 			"document",
@@ -1071,26 +1106,7 @@
 			"username",
 			"index",
 			"UserSchema",
-			"username",
-			"unique",
-			"username",
-			"already exists",
-			"username",
-			"DoingTaskSchema",
-			"users",
-			"user",
-			"user2",
-			"User",
-			"tasks",
-			"mongo",
-			"todoTasks",
-			"filter",
-			"start",
-			"today",
-			"start",
-			"taskDescription",
-			"todoTask",
-			"todo-tasks"
+			"username"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1098,6 +1114,7 @@
 		"regex": true,
 		"replace_history":
 		[
+			"getEmptySquare",
 			"console.log",
 			"\\n",
 			"",
@@ -1224,8 +1241,7 @@
 			"todoListCollectionTemplate",
 			"TodoListModel",
 			"TodoTaskView",
-			"todoTaskTemplate",
-			"TodoTaskModel"
+			"todoTaskTemplate"
 		],
 		"reverse": false,
 		"show_context": false,
@@ -1236,8 +1252,65 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "public/js/2048.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7003,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1740,
+								1740
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 434.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "public/stylesheets/style.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 295,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								293,
+								293
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -1274,7 +1347,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 278.0
+		"height": 226.0
 	},
 	"output.find_results":
 	{
@@ -1283,7 +1356,7 @@
 	"project": "2048.sublime-project",
 	"replace":
 	{
-		"height": 40.0
+		"height": 64.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1291,6 +1364,14 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				".git",
+				".gitignore"
+			],
+			[
+				"re",
+				"README.md"
+			],
 			[
 				"partial/",
 				"public/partials/contact.html"
@@ -1402,10 +1483,6 @@
 			[
 				"app.js",
 				"app.js"
-			],
-			[
-				".git",
-				".gitignore"
 			],
 			[
 				"pack",
@@ -1798,10 +1875,6 @@
 			[
 				"pub/js/cont/to",
 				"public/js/controllers/todo.js"
-			],
-			[
-				"pub/js/a",
-				"public/js/app.js"
 			]
 		],
 		"width": 0.0

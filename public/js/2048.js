@@ -50,30 +50,70 @@
 
             if (direction === 'w') {
 
-                if (this.grid.hasMove(direction)) {
-                    this.grid.eachRow(function (row) {
-                        var column = 0,
-                            square,
-                            firstEmpty,
-                            squareValue;
+                this.grid.eachRow(function (row) {
+                    var column = 0,
+                        square,
+                        squareValue,
+                        emptySquare,
+                        mergableSquare,
+                        movingSquare,
+                        i,
+                        targetSquareValue,
+                        afterEmptySquare,
+                        potentialMergable,
+                        lastMergeIndex,
+                        squareMoved;
 
-                        for (; column < row.length; column++) {
-                            square = row[column];
-                            squareValue = square.value();
+                    // Find the first square with a value.
+                    for (; column < row.length; column++) {
+                        square = row[column];
+                        squareValue = square.value();
+                        squareMoved = false;
 
-                            if (!squareValue) {
-                                firstEmpty = firstEmpty || square;
+                        if (squareValue) {
+                            movingSquare = square;
+
+                            // Find the furthest empty square in the direction
+                            // of movement and the first potential mergable.
+                            i = column - 1;
+                            targetSquareValue = 0;
+                            potentialMergable = null;
+                            while (i >= 0) {
+                                targetSquareValue = row[i].value();
+                                if (!targetSquareValue) {
+                                    emptySquare = row[i];
+                                } else if (!potentialMergable) {
+                                    // TODO: If this guy just merged, we can't
+                                    // merge again.  We have to test this.
+                                    potentialMergable = row[i];
+                                }
+
+                                i--;
                             }
 
-                            if (firstEmpty && squareValue) {
-                                firstEmpty.value(squareValue);
-                                square.value(0);
+                            // Try to merge.
+                            if (potentialMergable) {
+
+                                // Make sure we didn't just merge this one.
+                                if (lastMergeIndex !== potentialMergable.column) {
+
+                                        if (potentialMergable.merge(square)) {
+                                            lastMergeIndex = potentialMergable.column;
+                                            squareMoved = true;
+                                            
+                                        }
+                                }
+                            }
+
+                            if (emptySquare && !squareMoved) {
+                                emptySquare.merge(square);
+                                squareMoved = true;
                             }
                         }
-                    });
+                    }
+                });
 
-                    success = true;
-                }
+                success = true;
             } else {
                 success = true;
             }
@@ -188,10 +228,6 @@
                 }
             };
 
-            Grid.hasMove = function (direction) {
-                return true;
-            };
-
             Square.toString = function () {
                 return '[' + this.column + ', ' + this.row +
                     ' (' + this.value() + ')]';
@@ -205,6 +241,25 @@
                     app.topValue = Math.max(app.topValue, this.val);
                     this.el.html(this.val || '');
                 }
+            };
+
+            /**
+            * Merges this square's value with another's.
+            * Clears other's value.
+            * @return {Boolean} success
+            */
+            Square.merge = function (square) {
+                var squareValue = square.value(),
+                    value = this.value(),
+                    success = false;
+
+                if (!value || squareValue === value) {
+                    this.value(squareValue + value);
+                    square.value(0);
+                    success = true;
+                }
+
+                return success;
             };
         },
 
