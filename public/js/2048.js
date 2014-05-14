@@ -193,8 +193,18 @@
                 } else {
                     this.val = x;
                     app.topValue = Math.max(app.topValue, this.val);
-                    this.el.html(this.val || '');
+                    this.updateView();
                 }
+            };
+
+            Square.updateView = function () {
+                var value = this.value() || '';
+
+                // TODO: This is expensive and dumb.
+                // Added just to figure out the CSS for now.
+                this.el.html(value)
+                    .removeClass()
+                    .addClass('square ' + (value ? 'val-' + value : ''));
             };
 
             /**
