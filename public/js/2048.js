@@ -22,44 +22,63 @@
             var that = this;
             this.topValue = 0;
             this.grid.display();
+            this.grid.add();
 
-            // game loop
             // TODO: Clear this at the end of the game or set up 
             // one at the beginning.
             $('body').keydown(function (event) {
-                var direction;
-                switch (event.which) {
-                    case 38:
-                        direction = 'n';
-                        break;
-                    case 39:
-                        direction = 'e';
-                        break;
-                    case 37:
-                        direction = 'w';
-                        break;
-                    case 40:
-                        direction = 's';
-                        break;
-                    default:
-                }
-
+                var direction = that.KEYS[event.which];
+                
                 if (direction) {
-                    that.move(direction);
-                    that.grid.add();                
+
+                    // Attempt to move and then check to see if the
+                    // game is over.
+                    if (that.move(direction) &&
+                        !that.grid.add() || this.topValue === 2048) {
+                            console.log('game over');
+                        }
                 }
             });
-
-            // while (this.grid.add() && this.topValue < 2048) {
-            //     // wait for user input
-            // }
         },
 
         /**
         * @param {String} direction n,e,w, or s
+        * @return {Boolean} move completed
         */
         move: function (direction) {
+            var success;
 
+            if (direction === 'w') {
+
+                if (this.grid.hasMove(direction)) {
+                    this.grid.eachRow(function (row) {
+                        var column = 0,
+                            square,
+                            firstEmpty,
+                            squareValue;
+
+                        for (; column < row.length; column++) {
+                            square = row[column];
+                            squareValue = square.value();
+
+                            if (!squareValue) {
+                                firstEmpty = firstEmpty || square;
+                            }
+
+                            if (firstEmpty && squareValue) {
+                                firstEmpty.value(squareValue);
+                                square.value(0);
+                            }
+                        }
+                    });
+
+                    success = true;
+                }
+            } else {
+                success = true;
+            }
+
+            return success;
         },
 
         definePrototypes: function () {
@@ -122,13 +141,20 @@
             };
 
             Grid.each = function (fn) {
-                var r, row, c;
+                var c;
 
-                for (r = 0; r < this.rows; r++) {
-                    row = this.row(r);
+                this.eachRow(function (row) {
                     for (c = 0; c < row.length; c++) {
                         fn(row[c]);
                     }
+                });
+            };
+
+            Grid.eachRow = function (fn) {
+                var r;
+
+                for (r = 0; r < this.rows; r++) {
+                    fn(this.row(r));
                 }
             };
 
@@ -162,6 +188,10 @@
                 }
             };
 
+            Grid.hasMove = function (direction) {
+                return true;
+            };
+
             Square.toString = function () {
                 return '[' + this.column + ', ' + this.row +
                     ' (' + this.value() + ')]';
@@ -173,7 +203,7 @@
                 } else {
                     this.val = x;
                     app.topValue = Math.max(app.topValue, this.val);
-                    this.el.html(this.val);
+                    this.el.html(this.val || '');
                 }
             };
         },
@@ -190,7 +220,7 @@
             for (r = 0; r < rows; r++) {
                 row = [];
                 for (c = 0; c < columns; c++) {
-                    row.push(new app.Square(r, c));
+                    row.push(new app.Square(c, r));
                 }
                 this.grid.push(row);
             }
@@ -210,7 +240,14 @@
 
         grid: undefined,
         
-        topValue: undefined
+        topValue: undefined,
+
+        KEYS: {
+            38: 'n',
+            39: 'e',
+            37: 'w',
+            40: 's'
+        }
     };
 
     $(function () {
