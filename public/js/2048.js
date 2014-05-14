@@ -19,13 +19,47 @@
 
         // Start a new game.
         start: function () {
+            var that = this;
             this.topValue = 0;
+            this.grid.display();
 
             // game loop
-            while (this.grid.add() && this.topValue < 2048) {
+            // TODO: Clear this at the end of the game or set up 
+            // one at the beginning.
+            $('body').keydown(function (event) {
+                var direction;
+                switch (event.which) {
+                    case 38:
+                        direction = 'n';
+                        break;
+                    case 39:
+                        direction = 'e';
+                        break;
+                    case 37:
+                        direction = 'w';
+                        break;
+                    case 40:
+                        direction = 's';
+                        break;
+                    default:
+                }
 
-                this.grid.display();
-            }
+                if (direction) {
+                    that.move(direction);
+                    that.grid.add();                
+                }
+            });
+
+            // while (this.grid.add() && this.topValue < 2048) {
+            //     // wait for user input
+            // }
+        },
+
+        /**
+        * @param {String} direction n,e,w, or s
+        */
+        move: function (direction) {
+
         },
 
         definePrototypes: function () {
@@ -179,5 +213,7 @@
         topValue: undefined
     };
 
-    app.init();
+    $(function () {
+        app.init();
+    });
 }());

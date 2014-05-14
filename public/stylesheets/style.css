@@ -7,9 +7,16 @@ a {
   color: #00B7FF;
 }
 
+.row {
+    float: left;
+}
+
 .square {
     border: 2px solid #000;
-    padding: 20px;
+    border-radius: 6px;
+    width: 43px;
+    height: 43px;
     margin: 3px;
-    display: inline-block;
+    float: left;
+    text-align: center;
 }
