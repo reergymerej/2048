@@ -16,6 +16,7 @@ a {
     border-radius: 6px;
     width: 43px;
     height: 43px;
+    line-height: 43px;
     margin: 3px;
     position: relative;
     display: inline-block;

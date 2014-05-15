@@ -33,6 +33,9 @@
 
                     // Attempt to move and then check to see if the
                     // game is over.
+                    // TODO: Need to run a test for any valid moves
+                    // instead of waiting for the user to move so we
+                    // can tell if the game is over.
                     if (that.move(direction) &&
                         !that.grid.add() || this.topValue === 2048) {
                             console.log('game over');
